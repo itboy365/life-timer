@@ -13,11 +13,21 @@ body {
     color: #fff;
     min-height: 100vh;
     overflow-x: hidden;
-    transition: background 1.5s ease;
+    transition: background 0.6s ease, color 0.6s ease;
 }
 
 body.easter-egg {
     background: #2d1f0c;
+}
+
+/* ============ 浅色模式 ============ */
+body.light-mode {
+    background: #f0f2f8;
+    color: #1a1a2e;
+}
+
+body.light-mode.easter-egg {
+    background: #fdf6ec;
 }
 
 /* ============ Background ============ */
@@ -34,6 +44,14 @@ body.easter-egg {
 
 body.easter-egg .bg-gradient {
     background: linear-gradient(45deg, #3d2b0f, #5c3d1a, #2d1f0c);
+}
+
+body.light-mode .bg-gradient {
+    background: linear-gradient(45deg, #f0f2f8, #e8ecf5, #dce3f0);
+}
+
+body.light-mode.easter-egg .bg-gradient {
+    background: linear-gradient(45deg, #fdf6ec, #f5ebd8, #ecdcc0);
 }
 
 .bg-pattern {
@@ -54,6 +72,12 @@ body.easter-egg .bg-pattern {
     opacity: 0.3;
 }
 
+body.light-mode .bg-pattern {
+    background-image:
+        radial-gradient(circle at 25% 25%, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
 /* ============ Container ============ */
 .container {
     max-width: 1200px;
@@ -65,6 +89,41 @@ body.easter-egg .bg-pattern {
 .header {
     text-align: center;
     margin-bottom: 60px;
+    position: relative;
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    color: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+body.light-mode .theme-toggle {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .profile-pic {
@@ -104,6 +163,14 @@ body.easter-egg .profile-pic {
 
 body.easter-egg .profile-pic::before {
     background: rgba(45, 31, 12, 0.8);
+}
+
+body.light-mode .profile-pic::before {
+    background: rgba(240, 242, 248, 0.85);
+}
+
+body.light-mode.easter-egg .profile-pic::before {
+    background: rgba(253, 246, 236, 0.85);
 }
 
 .profile-pic span {
@@ -167,14 +234,30 @@ body.easter-egg .easter-egg-message {
 .card:nth-child(3) { animation-delay: 0.3s; }
 .card:nth-child(4) { animation-delay: 0.4s; }
 .card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+.card:nth-child(7) { animation-delay: 0.7s; }
 
 body.easter-egg .card {
     border-color: rgba(196, 149, 106, 0.2);
 }
 
+body.light-mode .card {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+body.light-mode.easter-egg .card {
+    border-color: rgba(196, 149, 106, 0.25);
+}
+
 .card:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.12);
+}
+
+body.light-mode .card:hover {
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .card-title {
@@ -187,6 +270,10 @@ body.easter-egg .card {
 
 body.easter-egg .card-title {
     color: #c4956a;
+}
+
+.card-wide {
+    grid-column: 1 / -1;
 }
 
 /* ============ Countdown ============ */
@@ -235,11 +322,16 @@ body.easter-egg .big-number {
     border-radius: 12px;
     padding: 15px 8px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: border-color 1.5s ease;
+    transition: border-color 1.5s ease, background 0.3s ease;
 }
 
 body.easter-egg .time-unit {
     border-color: rgba(196, 149, 106, 0.2);
+}
+
+body.light-mode .time-unit {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.06);
 }
 
 .time-number {
@@ -274,11 +366,16 @@ body.easter-egg .time-number {
     background: rgba(255, 255, 255, 0.04);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: border-color 1.5s ease;
+    transition: border-color 1.5s ease, background 0.3s ease;
 }
 
 body.easter-egg .stat-item {
     border-color: rgba(196, 149, 106, 0.2);
+}
+
+body.light-mode .stat-item {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.06);
 }
 
 .stat-number {
@@ -318,6 +415,10 @@ body.easter-egg .stat-number {
     position: relative;
 }
 
+body.light-mode .progress-bar {
+    background: rgba(0, 0, 0, 0.08);
+}
+
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, #667eea, #764ba2);
@@ -340,6 +441,10 @@ body.easter-egg .progress-fill {
     background: rgba(255, 255, 255, 0.2);
     z-index: 2;
     transition: opacity 0.5s ease;
+}
+
+body.light-mode .progress-bar::after {
+    background: rgba(0, 0, 0, 0.15);
 }
 
 .progress-bar.passed-half::after {
@@ -413,6 +518,10 @@ body.easter-egg .today-mood {
     overflow: hidden;
 }
 
+body.light-mode .week-progress-bar {
+    background: rgba(0, 0, 0, 0.08);
+}
+
 .week-progress-fill {
     height: 100%;
     background: linear-gradient(90deg, #667eea, #764ba2);
@@ -422,6 +531,155 @@ body.easter-egg .today-mood {
 
 body.easter-egg .week-progress-fill {
     background: linear-gradient(90deg, #c4956a, #e8c97a);
+}
+
+/* ============ Events ============ */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.event-item {
+    text-align: center;
+    padding: 20px 15px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 1.5s ease, background 0.3s ease;
+}
+
+body.easter-egg .event-item {
+    border-color: rgba(196, 149, 106, 0.2);
+}
+
+body.light-mode .event-item {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+.event-name {
+    font-size: 0.9rem;
+    opacity: 0.75;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+}
+
+.event-days {
+    font-size: 2rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 6px;
+}
+
+body.easter-egg .event-days {
+    background: linear-gradient(135deg, #c4956a, #e8c97a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.event-meta {
+    font-size: 0.75rem;
+    opacity: 0.5;
+}
+
+/* ============ Life Calendar ============ */
+.life-calendar {
+    display: grid;
+    grid-template-columns: repeat(52, 1fr);
+    gap: 3px;
+    margin-top: 20px;
+}
+
+.week-cell {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 1px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+body.light-mode .week-cell {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.week-cell.passed {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+body.easter-egg .week-cell.passed {
+    background: linear-gradient(135deg, #c4956a, #e8c97a);
+}
+
+.week-cell.current {
+    background: #fff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    transform: scale(1.4);
+    z-index: 1;
+}
+
+body.light-mode .week-cell.current {
+    background: #1a1a2e;
+    box-shadow: 0 0 8px rgba(26, 26, 46, 0.5);
+}
+
+body.easter-egg .week-cell.current {
+    background: #f5deb3;
+    box-shadow: 0 0 8px rgba(245, 222, 179, 0.8);
+}
+
+.week-cell:hover {
+    transform: scale(1.6);
+    cursor: default;
+}
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.calendar-legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+body.light-mode .legend-dot {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.legend-dot.passed {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.legend-dot.current {
+    background: #fff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+body.light-mode .legend-dot.current {
+    background: #1a1a2e;
+    box-shadow: 0 0 6px rgba(26, 26, 46, 0.5);
+}
+
+body.easter-egg .legend-dot.passed {
+    background: linear-gradient(135deg, #c4956a, #e8c97a);
 }
 
 /* ============ Footer ============ */
@@ -484,5 +742,17 @@ body.easter-egg .footer {
 
     .stats-grid {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .life-calendar {
+        gap: 2px;
+    }
+
+    .theme-toggle {
+        top: -10px;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 }
