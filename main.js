@@ -21,6 +21,7 @@
     document.getElementById('expectancyLabel').textContent = LIFE_EXPECTANCY;
     document.getElementById('expectancyWeeksLabel').textContent = LIFE_EXPECTANCY;
     document.getElementById('totalWeeksLabel').textContent = TOTAL_WEEKS;
+    document.getElementById('calendarWeeksLabel').textContent = TOTAL_WEEKS;
 
     // ============ DOM 引用 ============
     const el = {
@@ -48,7 +49,12 @@
         weekPercentage: document.getElementById('weekPercentage'),
         weekProgressFill: document.getElementById('weekProgressFill'),
         currentWeek: document.getElementById('currentWeek'),
-        progressBar: document.getElementById('progressBar')
+        progressBar: document.getElementById('progressBar'),
+        lifeCalendar: document.getElementById('lifeCalendar'),
+        eventsCard: document.getElementById('eventsCard'),
+        eventsGrid: document.getElementById('eventsGrid'),
+        themeToggle: document.getElementById('themeToggle'),
+        themeIcon: document.getElementById('themeIcon')
     };
 
     // ============ 时间工具 ============
@@ -62,6 +68,44 @@
     function getNow() {
         return new Date(Date.now() + (new Date().getTimezoneOffset() * 60 * 1000) + TIMEZONE_OFFSET_MS);
     }
+
+    // ============ 主题切换 ============
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-mode');
+            if (el.themeIcon) el.themeIcon.textContent = '☀️';
+        } else if (theme === 'dark') {
+            document.body.classList.remove('light-mode');
+            if (el.themeIcon) el.themeIcon.textContent = '🌙';
+        } else if (theme === 'auto') {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                document.body.classList.remove('light-mode');
+                if (el.themeIcon) el.themeIcon.textContent = '🌙';
+            } else {
+                document.body.classList.add('light-mode');
+                if (el.themeIcon) el.themeIcon.textContent = '☀️';
+            }
+        }
+    }
+
+    function initTheme() {
+        // 优先读 localStorage（用户手动切换过），否则用配置
+        const saved = localStorage.getItem('life-timer-theme');
+        const theme = saved || CONFIG.theme || 'dark';
+        applyTheme(theme);
+
+        if (el.themeToggle) {
+            el.themeToggle.addEventListener('click', function () {
+                const isLight = document.body.classList.contains('light-mode');
+                const next = isLight ? 'dark' : 'light';
+                applyTheme(next);
+                localStorage.setItem('life-timer-theme', next);
+            });
+        }
+    }
+
+    initTheme();
 
     // ============ 一言 API ============
     let lastMoodSlot = -1;
@@ -110,6 +154,65 @@
         el.weekProgressFill.style.width = weekProgress + '%';
     }
 
+    // ============ 生命日历渲染 ============
+    function renderLifeCalendar(now) {
+        if (!el.lifeCalendar) return;
+
+        const livedWeeks = Math.floor((now - BIRTHDAY) / (DAY_MS * 7));
+        let html = '';
+
+        for (let i = 0; i < TOTAL_WEEKS; i++) {
+            let cls = 'week-cell';
+            if (i < livedWeeks) cls += ' passed';
+            else if (i === livedWeeks) cls += ' current';
+
+            const yearNum = Math.floor(i / 52) + 1;
+            const weekNum = (i % 52) + 1;
+            html += `<div class="${cls}" title="第 ${yearNum} 年第 ${weekNum} 周（第 ${i + 1} 周）"></div>`;
+        }
+
+        el.lifeCalendar.innerHTML = html;
+    }
+    renderLifeCalendar.lastWeek = -1;
+
+    // ============ 纪念日渲染 ============
+    function renderEvents(now) {
+        if (!el.eventsCard || !el.eventsGrid) return;
+        const events = Array.isArray(CONFIG.events) ? CONFIG.events : [];
+
+        if (events.length === 0) {
+            el.eventsCard.style.display = 'none';
+            return;
+        }
+
+        el.eventsCard.style.display = '';
+        let html = '';
+
+        events.forEach(evt => {
+            const evtDate = new Date(evt.date + 'T00:00:00');
+            let next = new Date(now.getFullYear(), evtDate.getMonth(), evtDate.getDate());
+            if (next.getTime() <= now.getTime()) {
+                next = new Date(now.getFullYear() + 1, evtDate.getMonth(), evtDate.getDate());
+            }
+            const diff = next.getTime() - now.getTime();
+            const days = Math.floor(diff / DAY_MS);
+            const hours = Math.floor((diff % DAY_MS) / HOUR_MS);
+            const mins = Math.floor((diff % HOUR_MS) / MINUTE_MS);
+
+            const isToday = days === 0 && hours < 24;
+
+            html += `
+                <div class="event-item">
+                    <div class="event-name">${evt.name}</div>
+                    <div class="event-days">${isToday ? '🎉' : days}</div>
+                    <div class="event-meta">${isToday ? '就是今天！' : `${days} 天 ${hours} 时 ${mins} 分`}</div>
+                </div>
+            `;
+        });
+
+        el.eventsGrid.innerHTML = html;
+    }
+
     // ============ 主更新循环 ============
     function updateTime() {
         const now = getNow();
@@ -125,7 +228,6 @@
         el.currentTime.textContent =
             `${year}年${month}月${day}日 星期${weekday} ${hours}:${minutes}:${seconds}`;
 
-        // 每10分钟更新一言
         if (CONFIG.enableHitokoto) {
             tryUpdateMood(now.getMinutes());
         }
@@ -198,7 +300,20 @@
 
         // ---------- 生命周数 ----------
         updateWeekDisplay(now);
+
+        // ---------- 生命日历（仅周数变化时重绘） ----------
+        const currentLivedWeeks = Math.floor((now - BIRTHDAY) / (DAY_MS * 7));
+        if (currentLivedWeeks !== renderLifeCalendar.lastWeek) {
+            renderLifeCalendar.lastWeek = currentLivedWeeks;
+            renderLifeCalendar(now);
+        }
+
+        // ---------- 纪念日 ----------
+        renderEvents(now);
     }
+
+    // 首次渲染生命日历
+    renderLifeCalendar(getNow());
 
     updateTime();
     setInterval(updateTime, 1000);
