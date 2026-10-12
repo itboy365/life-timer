@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>人生时光 · 365天</title>
+    <meta name="description" content="一个优雅的人生仪表盘，实时展示精确年龄、已活时间、人生进度、生日倒计时、生命日历与生命周数。">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏳</text></svg>">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,6 +14,9 @@
 
     <div class="container">
         <div class="header">
+            <button class="theme-toggle" id="themeToggle" title="切换主题" aria-label="切换主题">
+                <span id="themeIcon">🌙</span>
+            </button>
             <div class="profile-pic" id="profilePic" title="双击有惊喜">
                 <span id="avatarText">人生</span>
             </div>
@@ -118,6 +123,23 @@
                     <div class="week-progress-bar">
                         <div class="week-progress-fill" id="weekProgressFill"></div>
                     </div>
+                </div>
+            </div>
+
+            <!-- 自定义纪念日（有配置才显示） -->
+            <div class="card card-wide" id="eventsCard" style="display: none;">
+                <div class="card-title">纪念日</div>
+                <div class="events-grid" id="eventsGrid"></div>
+            </div>
+
+            <!-- 生命日历 -->
+            <div class="card card-wide">
+                <div class="card-title">生命日历 · <span id="calendarWeeksLabel">5200</span>周</div>
+                <div class="life-calendar" id="lifeCalendar"></div>
+                <div class="calendar-legend">
+                    <span><i class="legend-dot passed"></i>已过</span>
+                    <span><i class="legend-dot current"></i>当前</span>
+                    <span><i class="legend-dot"></i>未来</span>
                 </div>
             </div>
         </div>
