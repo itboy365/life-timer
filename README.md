@@ -8,10 +8,7 @@
 
 纯前端 · 零依赖 · 开箱即用
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![HTML](https://img.shields.io/badge/HTML-5-E34F26?logo=html5&logoColor=white)](index.html)
-[![CSS](https://img.shields.io/badge/CSS-3-1572B6?logo=css3&logoColor=white)](style.css)
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?logo=javascript&logoColor=black)](main.js)
+**简体中文** · [English](README_EN.md)
 
 </div>
 
@@ -120,11 +117,11 @@ const CONFIG = {
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/itboy365/life-timer)
+访问 [vercel.com/new](https://vercel.com/new)，导入这个 GitHub 仓库，直接部署即可。
 
 ### Netlify
 
-直接把整个文件夹拖到 [Netlify Drop](https://app.netlify.com/drop) 即可。
+直接把整个文件夹拖到 [app.netlify.com/drop](https://app.netlify.com/drop) 即可。
 
 ### Cloudflare Pages
 
@@ -144,7 +141,8 @@ life-timer/
 ├── style.css       # 全部样式
 ├── config.js       # 用户配置（唯一需要修改的文件）
 ├── main.js         # 主逻辑
-├── README.md       # 本文件
+├── README.md       # 中文说明
+├── README_EN.md    # 英文说明
 ├── LICENSE         # MIT
 └── .gitignore
 ```
