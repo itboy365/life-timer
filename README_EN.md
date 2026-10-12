@@ -4,14 +4,9 @@
 
 **An elegant life dashboard**
 
-Displays your exact age, time lived, life progress, birthday countdown, and weeks lived — in real time.
+Displays your exact age, time lived, life progress, birthday countdown, weeks lived, and a life calendar — in real time.
 
 Pure frontend · Zero dependencies · Ready to run
-
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![HTML](https://img.shields.io/badge/HTML-5-E34F26?logo=html5&logoColor=white)](index.html)
-[![CSS](https://img.shields.io/badge/CSS-3-1572B6?logo=css3&logoColor=white)](style.css)
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?logo=javascript&logoColor=black)](main.js)
 
 [简体中文](README.md) · **English**
 
@@ -27,6 +22,7 @@ Pure frontend · Zero dependencies · Ready to run
 - What percentage of your life has passed?
 - How many days, hours, minutes, and seconds until your next birthday?
 - Which week of your life are you currently in?
+- In the grid of 5200 weeks, how many have you already passed?
 
 No backend, no database, no build tools. Just double-click `index.html`.
 
@@ -41,6 +37,9 @@ No backend, no database, no build tools. Just double-click `index.html`.
 | 📊 **Life Progress** | Progress bar based on life expectancy, with a 50% marker |
 | 🎈 **Birthday Countdown** | Days / hours / minutes / seconds |
 | 📅 **Weeks Lived** | Which week of your life you're in |
+| 🗓️ **Life Calendar** | A 5200-week grid — see your whole life at a glance |
+| 🎯 **Custom Events** | Countdown to anniversaries like wedding, career, graduation |
+| 🌞 **Light / Dark Mode** | One-click toggle, remembers your preference |
 | 💬 **Daily Quote** | Random sentence from Hitokoto API (can be disabled) |
 | 🌈 **Easter Egg** | Double-click the avatar to switch to a warm theme |
 
@@ -102,11 +101,34 @@ const CONFIG = {
     enableHitokoto: true,
 
     // Timezone offset in minutes. Default +480 = UTC+8
-    timezoneOffset: 480
+    timezoneOffset: 480,
+
+    // Theme: 'dark' | 'light' | 'auto'
+    theme: 'dark',
+
+    // Custom events (leave empty to hide the card)
+    events: [
+        // { name: 'Wedding Anniversary', date: '2024-05-20' },
+        // { name: 'Work Anniversary', date: '2021-09-01' },
+    ]
 };
 ```
 
 Save and refresh.
+
+### Custom Events Example
+
+Just uncomment the `events` array and fill in your dates:
+
+```javascript
+events: [
+    { name: 'Wedding Anniversary', date: '2024-05-20' },
+    { name: 'Work Anniversary', date: '2021-09-01' },
+    { name: 'Graduation Day', date: '2020-06-30' },
+]
+```
+
+A new "Events" card will appear, showing a countdown to each date.
 
 ---
 
@@ -122,11 +144,11 @@ Save and refresh.
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/itboy365/life-timer)
+Visit [vercel.com/new](https://vercel.com/new), import this GitHub repository, and deploy.
 
 ### Netlify
 
-Drag the entire folder into [Netlify Drop](https://app.netlify.com/drop).
+Drag the entire folder into [app.netlify.com/drop](https://app.netlify.com/drop).
 
 ### Cloudflare Pages
 
@@ -164,10 +186,11 @@ Edit `style.css` and replace the following color values:
 
 | Purpose | Original Value | Where It Appears |
 |---|---|---|
-| Primary gradient (start) | `#667eea` | Avatar, progress bar, big number |
+| Primary gradient (start) | `#667eea` | Avatar, progress bar, big number, calendar cells |
 | Primary gradient (end) | `#764ba2` | Same as above |
 | Dark background | `#1a1a2e` | `body` background |
 | Background gradient | `#16213e` `#0f3460` | `.bg-gradient` |
+| Light mode background | `#f0f2f8` | `body.light-mode` |
 | Easter egg warm colors | `#c4956a` `#e8c97a` | `.easter-egg` related |
 
 ### Add a New Card
