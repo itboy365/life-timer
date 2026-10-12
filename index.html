@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生时光 · 365天</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-pattern"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="profile-pic" id="profilePic" title="双击有惊喜">
+                <span id="avatarText">人生</span>
+            </div>
+            <div class="subtitle" id="currentTime"></div>
+            <div class="easter-egg-message" id="easterEggMsg">故事开始。</div>
+        </div>
+
+        <div class="grid">
+            <!-- 精确年龄 -->
+            <div class="card">
+                <div class="card-title">精确年龄</div>
+                <div class="age-display" id="exactAge">计算中...</div>
+                <div class="today-mood" id="todayMood">——</div>
+                <div class="time-info">
+                    <span>今年第 <span id="dayOfYear">1</span> 天</span>
+                    <span>本月第 <span id="dayOfMonth">1</span> 天</span>
+                </div>
+            </div>
+
+            <!-- 已活时间 -->
+            <div class="card">
+                <div class="card-title">已活时间</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalMonths">0</span>
+                        <div class="stat-label">月</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalDays">0</span>
+                        <div class="stat-label">天</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalHours">0</span>
+                        <div class="stat-label">小时</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalMinutes">0</span>
+                        <div class="stat-label">分钟</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalSeconds">0</span>
+                        <div class="stat-label">秒</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 人生进度 -->
+            <div class="card">
+                <div class="card-title">人生进度</div>
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span>预期 <span id="expectancyLabel">100</span> 岁</span>
+                        <span id="lifePercentage">0%</span>
+                    </div>
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="lifeProgressFill"></div>
+                    </div>
+                    <div class="progress-details">
+                        剩余大约 <span id="remainingYears">0</span> 年<br>
+                        还有 <span id="remainingDays">0</span> 天
+                    </div>
+                </div>
+            </div>
+
+            <!-- 距离生日 -->
+            <div class="card">
+                <div class="card-title">距离生日还有</div>
+                <div class="countdown-main">
+                    <div class="big-number" id="birthdayDays">365</div>
+                    <div class="big-label">
+                        <span id="birthdayText">计算中...</span>
+                        <span id="cake"> 🎂</span>
+                    </div>
+                </div>
+                <div class="time-units">
+                    <div class="time-unit">
+                        <span class="time-number" id="bdDays">0</span>
+                        <div class="time-label">天</div>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="bdHours">0</span>
+                        <div class="time-label">时</div>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="bdMinutes">0</span>
+                        <div class="time-label">分</div>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="bdSeconds">0</span>
+                        <div class="time-label">秒</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 生命周数 -->
+            <div class="card">
+                <div class="card-title">生命周数 · <span id="expectancyWeeksLabel">100</span>岁约<span id="totalWeeksLabel">5200</span>周</div>
+                <div class="week-display">
+                    <span class="week-number" id="currentWeek">第 0 周</span>
+                    <div class="week-progress-header">
+                        <span>你正在度过人生中第 <span id="weekNumber">0</span> 周</span>
+                        <span id="weekPercentage">0%</span>
+                    </div>
+                    <div class="week-progress-bar">
+                        <div class="week-progress-fill" id="weekProgressFill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer" id="footerText">人生时光 · 365天</div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
